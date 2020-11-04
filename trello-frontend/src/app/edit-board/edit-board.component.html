@@ -1,0 +1,38 @@
+<h2>Board Editor: {{board.title}}</h2>
+
+<h3>
+    Drag/drop cards to change order. Click Save to preserve your last setting.
+</h3>
+<br>
+
+<div cdkDropList class="cardList" (cdkDropListDropped)="drop($event)">
+    <div class="cards" *ngFor="let card of board.cards; let i=index" cdkDrag> {{card}} 
+        <input *ngIf="displayTextBox && i===editCardId" type="text" [(ngModel)]="editedText" maxlength="80" 
+        (keyup.enter)="saveEditedCard(editedText)" 
+        placeholder="New text for the selected card.">
+        <button *ngIf="!displayTextBox" class="edit" (click)="toggleCardEditing(card)">EDIT</button>
+        <button class="edit" (click)="deleteCard(card)">X</button>
+    </div>
+</div>
+
+<div>
+    <button class="save" *ngIf="displayTextBox" (click)="toggleCardEditing()">
+        Cancel Editing
+    </button>
+</div>
+
+<br> 
+
+<div>
+    <input type="text" [(ngModel)]="newText" maxlength="80"
+        (keyup.enter)="addCard(newText)" placeholder="Type something here and press enter.">
+    <br> <br>
+    <button class="save" (click)="updateBoard()">SAVE</button>
+    <br> <br> 
+    <a routerLink="/workspace">Back To Workspace</a>
+</div>
+
+
+
+
+
